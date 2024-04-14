@@ -1,0 +1,65 @@
+<!doctype html>
+
+<html lang="pt-br">
+
+  <head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Página inicial!</title>
+
+  </head>
+
+  <body>
+
+  <div class="container">
+
+    <form method="POST" action="/login">
+
+      <label for="nome">Nome:</label>
+
+      <input type="text" name="nome" id="nome">
+
+      <br><br>
+
+      <button type="submit">Entrar</button>
+
+    </form>
+
+    <br>
+
+    <form method="POST" action="/logout">
+
+      <button type="submit">Sair</button>
+    
+    </form>
+
+    {{#aviso}}
+
+      <p>Status: {{.}}</p>
+
+    {{/aviso}}
+
+    <form method="POST" action="/pagina">
+
+      <label for="conteudo">Conteúdo:</label>
+
+      <textarea type="text" name="conteudo" id="conteudo"></textarea>
+
+      <button type="submit">Criar página</button>
+    
+    </form>
+
+    {{#conteudo}}
+
+      <p>Conteúdo: {{.}}</p>
+
+    {{/conteudo}}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  
+  </body>
+
+</html>
