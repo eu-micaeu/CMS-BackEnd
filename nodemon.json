@@ -1,0 +1,5 @@
+{
+    "watch": ["index.js", "controls/", "views/index.mustache", "views/home.mustache"],
+    "ext": "js,mustache"
+  }
+  

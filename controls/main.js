@@ -1,15 +1,38 @@
 const express = require('express')
 const router = express.Router()
+const fs = require('fs');
+const path = require('path'); 
 
 let usuario
+
 const todasPaginas = {
     paginaNova: []
 };
+
+todasPaginas.paginaNova.push({"url": "teste", "conteudo": "Olá! Bem-vindo ao sistema de criação de páginas."})
+
+// Páginas
 
 router.get("/", (req, res) => {
 
     res.render("index", {todasPaginas: todasPaginas})
 })
+
+router.get("/home", (req, res) => {
+
+    if(!req.session.usuario){
+
+        return res.redirect("/")
+
+    }
+
+    res.render("home", {usuario: usuario, todasPaginas: todasPaginas})
+
+})
+
+//
+
+// Funções
 
 // Para controle de autenticação do usuário deve ser utilizado sessão
 router.post("/login", (req, res) => {
@@ -24,7 +47,9 @@ router.post("/login", (req, res) => {
 
         usuario = req.body.usuario
 
-        return res.render("home", { usuario: usuario, todasPaginas: todasPaginas } )
+        req.session.usuario = usuario
+
+        res.redirect("/home")
 
     }
 
@@ -35,7 +60,7 @@ router.post("/logout", (req, res) => {
 
     req.session.destroy()
 
-    return res.render("index", {aviso: "Usuário deslogado", todasPaginas: todasPaginas})
+    res.redirect("/")
 
 })
 
@@ -45,20 +70,57 @@ router.post("/criar", (req, res) => {
     if(req.body.url == "" || req.body.conteudo == ""){
 
         return res.render("home", {aviso: "Preencha todos os dados", usuario: usuario, todasPaginas: todasPaginas})
+
     }
+
     else if(todasPaginas.paginaNova.some(pagina => pagina.url == req.body.url)){
+
         return res.render("home", {aviso: "Essa URL já foi usada antes", usuario: usuario, todasPaginas: todasPaginas})
+        
     }
+
+    console.log(todasPaginas)
 
     todasPaginas.paginaNova.push({"url": req.body.url, "conteudo": req.body.conteudo});
 
-    return res.render("home", { usuario: usuario, todasPaginas: todasPaginas });
+    console.log(todasPaginas)
+
+    // Caminho absoluto para o arquivo
+
+    const filePath = path.join(__dirname, '../views', `${req.body.url}.mustache`);
+
+    // Criando arquivo com o conteúdo da página
+
+    fs.writeFile(filePath, req.body.conteudo, (err) => {
+
+        if (err) {
+
+            console.error("Erro ao criar o arquivo:", err);
+            return res.render("home", { aviso: "Erro ao criar página", usuario: usuario, todasPaginas: todasPaginas });
+        } else {
+            console.log("Página criada com sucesso");
+        }
+    });
+
+    res.render("home", {usuario: usuario, todasPaginas: todasPaginas})
+
 })
 
-//A rota que recebe a url da página como parâmetro e renderiza o template usando o conteudo como argumento
-router.post("/:url", (req, res) => {
+// A rota que recebe a URL da página como parâmetro e renderiza o template usando o conteúdo como argumento
+router.get("/:url", (req, res) => {
 
-})
+    const filePath = path.join(__dirname, '../views', `${req.params.url}.mustache`);
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+
+        if (err) {
+            console.error("Erro ao ler o arquivo:", err);
+            return res.status(404).render("404", { aviso: "Página não encontrada", usuario: usuario });
+        }
+
+        res.render(req.params.url, { conteudo: data, usuario: usuario });
+    });
+});
 
 module.exports = router
 
