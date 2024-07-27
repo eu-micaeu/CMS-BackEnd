@@ -30,6 +30,18 @@ router.get("/home", (req, res) => {
 
 })
 
+router.get("/excluir", (req, res) => {
+
+    if(!req.session.usuario){
+
+        return res.redirect("/")
+
+    }
+
+    res.render("excluir", {usuario: usuario, todasPaginas: todasPaginas})
+
+})
+
 //
 
 // Funções
@@ -103,6 +115,47 @@ router.post("/criar", (req, res) => {
     });
 
     res.render("home", {usuario: usuario, todasPaginas: todasPaginas})
+
+})
+
+router.post("/deletar", (req, res) => {
+
+    if(req.body.url == ""){
+
+        return res.render("excluir", {aviso: "Preencha a url", usuario: usuario, todasPaginas: todasPaginas})
+
+    }
+
+    else if(!todasPaginas.paginaNova.some(pagina => pagina.url == req.body.url)){
+
+        return res.render("excluir", {aviso: "Essa URL não foi cadastrada", usuario: usuario, todasPaginas: todasPaginas})
+        
+    }
+
+    // Caminho absoluto para o arquivo
+
+    const filePath = path.join(__dirname, '../views', `${req.body.url}.mustache`);
+
+    console.log(todasPaginas)
+
+    todasPaginas.paginaNova = todasPaginas.paginaNova.filter(pagina => pagina.url !== req.body.url);
+
+    console.log(todasPaginas)
+
+    // Criando arquivo com o conteúdo da página
+
+    fs.unlink(filePath, (err) => {
+
+        if (err) {
+
+            console.error("Erro ao deletar o arquivo:", err);
+            return res.render("home", { aviso: "Erro ao deletar página", usuario: usuario, todasPaginas: todasPaginas });
+        } else {
+            console.log("Página deletada com sucesso");
+        }
+    });
+
+    res.render("excluir", {usuario: usuario, todasPaginas: todasPaginas})
 
 })
 

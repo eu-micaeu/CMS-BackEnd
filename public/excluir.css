@@ -1,0 +1,29 @@
+.button {
+
+    margin: 5px;
+  
+    font-size: 20px;
+  
+    width: 100px;
+  
+    border-radius: 5px;
+  
+    font-family: monospace;
+  
+    padding: 5px;
+  
+    color: white;
+  
+    border: none;
+  
+    cursor: pointer;
+  
+    transition: 0.3s;
+  
+  }
+
+  .button:hover {
+
+    transform: scale(1.1);
+
+  }
