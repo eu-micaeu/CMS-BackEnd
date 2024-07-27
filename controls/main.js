@@ -6,10 +6,12 @@ const path = require('path');
 let usuario
 
 const todasPaginas = {
+
     paginaNova: []
+
 };
 
-todasPaginas.paginaNova.push({"url": "teste", "conteudo": "Olá! Bem-vindo ao sistema de criação de páginas."})
+todasPaginas.paginaNova.push({"url": "teste","header": "Teste" , "main": "Olá! Bem-vindo ao sistema de criação de páginas.", "footer": "Teste2024"})
 
 // Páginas
 
@@ -79,7 +81,32 @@ router.post("/logout", (req, res) => {
 //A rota que recebe os dados da nova página e os armazena em um objeto que guarda todas as páginas, verificando se os campos foram preenchidos e se a URL é repetida
 router.post("/criar", (req, res) => {
 
-    if(req.body.url == "" || req.body.conteudo == ""){
+    const pag = 
+    "<!doctype html>" +
+    "<html lang='pt-br'>" +
+    "<head>" +
+    "<meta charset='utf-8'>" +
+    "<title>" + req.body.header + "</title>" +
+    "<link rel='stylesheet' href='./global.css'></link>" +
+    "</head>" +
+    "<body>" + 
+    "<header>" + 
+    "<h1>" + 
+    req.body.header + 
+    "</h1>" + 
+    "</header>"+
+    "<main>" +
+    req.body.main +
+    "</main>" +
+    "<footer>" +
+    req.body.footer +
+    "</footer>" +
+    "</body>" +
+    "</html>";
+
+    console.log(req.body)
+
+    if(req.body.url == "" || req.body.header == ""){
 
         return res.render("home", {aviso: "Preencha todos os dados", usuario: usuario, todasPaginas: todasPaginas})
 
@@ -91,11 +118,7 @@ router.post("/criar", (req, res) => {
         
     }
 
-    console.log(todasPaginas)
-
-    todasPaginas.paginaNova.push({"url": req.body.url, "conteudo": req.body.conteudo});
-
-    console.log(todasPaginas)
+    todasPaginas.paginaNova.push({"url": req.body.url, "header": req.body.header, "main": req.body.main, "footer": req.body.footer});
 
     // Caminho absoluto para o arquivo
 
@@ -103,7 +126,7 @@ router.post("/criar", (req, res) => {
 
     // Criando arquivo com o conteúdo da página
 
-    fs.writeFile(filePath, req.body.conteudo, (err) => {
+    fs.writeFile(filePath, pag, (err) => {
 
         if (err) {
 
@@ -114,7 +137,7 @@ router.post("/criar", (req, res) => {
         }
     });
 
-    res.render("home", {usuario: usuario, todasPaginas: todasPaginas})
+    res.redirect("/home")
 
 })
 
@@ -172,19 +195,9 @@ router.get("/:url", (req, res) => {
         }
 
         res.render(req.params.url, { conteudo: data, usuario: usuario });
+
     });
+
 });
 
 module.exports = router
-
-/*
-
-colocar a restrição de conteudo vazio e repetido no input
-
-fazer as páginas serem exibidas uma do lado da outra ao invés de em baixo
-
-tornar o link clicável
-
-fazer com que uma página seja criada corretamente com base no conteudo -> criar um tempate mustache vazio que é preenchido com o conteudo
-
-*/

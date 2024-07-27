@@ -44,9 +44,21 @@
 
       <br><br>
 
-      <label for="conteudo">Conteúdo da página:</label>
+      <label for="header">Header da página:</label>
       
-      <textarea name="conteudo" id="conteudo" rows="5" cols="40"></textarea>
+      <input type="text" name="header" id="header">
+
+      <br><br>
+
+      <label for="main">Main da página:</label>
+      
+      <input type="main" name="main" id="main">
+
+      <br><br>
+
+      <label for="footer">Footer da página:</label>
+      
+      <input type="text" name="footer" id="footer">
 
       <br><br>
 
@@ -68,17 +80,13 @@
 
         <div class=conteudo>
 
-          URL: <a href="http://localhost:3000/{{url}}" target="_blank">http://localhost:3000/{{url}}</a>
-
-          <p>Conteudo: {{conteudo}}</p>
+          <a href="http://localhost:3000/{{url}}" target="_blank">{{url}}</a>
           
         </div>
 
       {{/todasPaginas.paginaNova}}
 
     </div>
-
-    <br><br>
 
     <script>
       function goToExcluir() {
