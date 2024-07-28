@@ -31,8 +31,15 @@
       <button type="submit" id="btnSair" style="background-color: red">Sair</button>
 
     </form>
+
+    <div>
+    
+      <button onClick="goToExcluir()" id="btnNavExcluir" style="background-color: red" class="button">Ir para deleção</button>
+
+      <button onClick="goToEditar()" id="btnNavEditar" style="background-color: grey" class="button">Ir para edição</button>
+    
+    </div>
    
-    <button onClick="goToExcluir()" id="btnNavExcluir" style="background-color: red" class="button">Ir para deleção</button>
 
     <h1>Criação de Páginas</h1>
 
@@ -91,6 +98,10 @@
     <script>
       function goToExcluir() {
         window.location.href = "/excluir"
+      }
+
+      function goToEditar() {
+        window.location.href = "/editar"
       }
     </script>
     

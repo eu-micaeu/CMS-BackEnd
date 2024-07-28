@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="./home.css">
-    
+
     <link rel="stylesheet" href="./excluir.css">
 
     <title>Tmk</title>
@@ -34,24 +34,42 @@
 
     <div>
     
-      <button onClick="goToEditar()" id="btnNavEditar" style="background-color: grey" class="button">Ir para edição</button>
+        <button onClick="goToExcluir()" id="btnNavExcluir" style="background-color: red" class="button">Ir para deleção</button>
 
-      <button onClick="goToCriar()" id="btnNavCriar" style="background-color: green" class="button">Ir para criação</button>
+        <button onClick="goToCriar()" id="btnNavCriar" style="background-color: green" class="button">Ir para criação</button>
     
     </div>
    
 
-    <h1>Exclusão de Páginas</h1>
+    <h1>Edição de Páginas</h1>
 
-    <form method="POST" action="/deletar" class= deletarPagina>
+    <form method="POST" action="/editar" class= criarPagina>
 
-      <label for="url">URL da página:</label>
+      <label for="url">URL da página para alterar:</label>
 
       <input type="text" name="url" id="url">
 
       <br><br>
 
-      <button type="submit" id="btnExcluir" style="background-color: red">Excluir</button>
+      <label for="header">Novo header da página:</label>
+      
+      <input type="text" name="header" id="header">
+
+      <br><br>
+
+      <label for="main">Nova main da página:</label>
+      
+      <input type="main" name="main" id="main">
+
+      <br><br>
+
+      <label for="footer">Novo footer da página:</label>
+      
+      <input type="text" name="footer" id="footer">
+
+      <br><br>
+
+      <button type="submit" id="btnEditar" style="background-color: grey">Salvar</button>
 
     </form>
 
@@ -78,15 +96,15 @@
     </div>
 
     <script>
+      function goToExcluir() {
+        window.location.href = "/excluir"
+      }
+
       function goToCriar() {
         window.location.href = "/home"
       }
-
-      function goToEditar() {
-        window.location.href = "/editar"
-      }
     </script>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   
   </body>
