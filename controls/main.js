@@ -11,7 +11,12 @@ const todasPaginas = {
 
 };
 
-todasPaginas.paginaNova.push({"url": "teste","header": "Teste" , "main": "Olá! Bem-vindo ao sistema de criação de páginas.", "footer": "Teste2024"})
+todasPaginas.paginaNova.push({
+    "url": "teste",
+    "header": "Teste" , 
+    "main": "Olá! Bem-vindo ao sistema de criação de páginas.", 
+    "footer": "Teste2024"
+})
 
 // Páginas
 
@@ -41,6 +46,18 @@ router.get("/excluir", (req, res) => {
     }
 
     res.render("excluir", {usuario: usuario, todasPaginas: todasPaginas})
+
+})
+
+router.get("/editar", (req, res) => {
+
+    if(!req.session.usuario){
+
+        return res.redirect("/")
+
+    }
+
+    res.render("editar", {usuario: usuario, todasPaginas: todasPaginas})
 
 })
 
@@ -118,7 +135,12 @@ router.post("/criar", (req, res) => {
         
     }
 
-    todasPaginas.paginaNova.push({"url": req.body.url, "header": req.body.header, "main": req.body.main, "footer": req.body.footer});
+    todasPaginas.paginaNova.push({
+        "url": req.body.url, 
+        "header": req.body.header, 
+        "main": req.body.main, 
+        "footer": req.body.footer
+    });
 
     // Caminho absoluto para o arquivo
 
@@ -140,6 +162,8 @@ router.post("/criar", (req, res) => {
     res.redirect("/home")
 
 })
+
+//A rota que recebe os dados da página a ser excluida, percorrendo o array de páginas para identificar e excluir a rota do array e dos arquivos, verificando se a URL existe e foi preenchida
 
 router.post("/deletar", (req, res) => {
 
@@ -165,7 +189,7 @@ router.post("/deletar", (req, res) => {
 
     console.log(todasPaginas)
 
-    // Criando arquivo com o conteúdo da página
+    // Excluindo arquivo da página escolhida
 
     fs.unlink(filePath, (err) => {
 
@@ -178,7 +202,84 @@ router.post("/deletar", (req, res) => {
         }
     });
 
-    res.render("excluir", {usuario: usuario, todasPaginas: todasPaginas})
+    res.redirect("/excluir")
+
+})
+
+//A rota que recebe os dados da página a ser editada e os altera tanto no array quanto no arquivo, verificando se os campos foram preenchidos e se a URL existe
+
+router.post("/editar", (req, res) => {
+
+    const newInfo = 
+    "<!doctype html>" +
+    "<html lang='pt-br'>" +
+    "<head>" +
+    "<meta charset='utf-8'>" +
+    "<title>" + req.body.header + "</title>" +
+    "<link rel='stylesheet' href='./global.css'></link>" +
+    "</head>" +
+    "<body>" + 
+    "<header>" + 
+    "<h1>" + 
+    req.body.header + 
+    "</h1>" + 
+    "</header>"+
+    "<main>" +
+    req.body.main +
+    "</main>" +
+    "<footer>" +
+    req.body.footer +
+    "</footer>" +
+    "</body>" +
+    "</html>";
+
+    console.log(req.body)
+
+    if(req.body.url == "" || req.body.header == "" || req.body.main == "" || req.body.footer == ""){
+
+        return res.render("editar", {aviso: "Preencha todos os dados", usuario: usuario, todasPaginas: todasPaginas})
+
+    }
+
+    else if(!todasPaginas.paginaNova.some(pagina => pagina.url == req.body.url)){
+
+        return res.render("editar", {aviso: "Essa URL não foi cadastrada", usuario: usuario, todasPaginas: todasPaginas})
+        
+    }
+
+    // Caminho absoluto para o arquivo
+
+    const filePath = path.join(__dirname, '../views', `${req.body.url}.mustache`);
+
+    // Percorre o array para identifiar a página a ser alterada e modifica com base nos dados fornecidos
+
+    for(let i = 0; i < todasPaginas.paginaNova.length; i++){
+
+        if(todasPaginas.paginaNova[i].url == req.body.url){
+
+            todasPaginas.paginaNova[i] = { 
+                "url": req.body.url,
+                "header": req.body.header, 
+                "main": req.body.main, 
+                "footer": req.body.footer
+            };
+
+            fs.writeFile(filePath, newInfo, (err) => {
+
+                if (err) {
+                    console.error("Erro ao editar o arquivo:", err);
+                    return res.render("editar", { aviso: "Erro ao editar página", usuario: usuario, todasPaginas: todasPaginas });
+                } else {
+                    console.log("Página editada com sucesso");
+                }
+
+            })
+
+        }
+
+    }
+
+    res.redirect("/editar")
 
 })
 
