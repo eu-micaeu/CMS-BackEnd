@@ -61,11 +61,11 @@
       
     {{/aviso}}
 
-    <h2>Páginas existentes</h2>
-
     <div class=paginas>
 
       {{#todasPaginas.paginaNova}}
+
+        <h2>Páginas existentes</h2>
 
         <div class=conteudo>
 
@@ -73,6 +73,12 @@
           
         </div>
 
+      {{/todasPaginas.paginaNova}}
+
+      {{^todasPaginas.paginaNova}}
+      
+        <h2>Não existe páginas</h2>
+      
       {{/todasPaginas.paginaNova}}
 
     </div>

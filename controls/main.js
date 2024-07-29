@@ -11,13 +11,6 @@ const todasPaginas = {
 
 };
 
-todasPaginas.paginaNova.push({
-    "url": "teste",
-    "header": "Teste" , 
-    "main": "Olá! Bem-vindo ao sistema de criação de páginas.", 
-    "footer": "Teste2024"
-})
-
 // Páginas
 
 router.get("/", (req, res) => {
