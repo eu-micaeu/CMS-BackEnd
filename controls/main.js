@@ -5,11 +5,18 @@ const path = require('path');
 
 let usuario
 
-const todasPaginas = {
+const inicializarTodasPaginas = () => {
+    const arquivos = fs.readdirSync(path.join(__dirname, '../views/posts'));
+    const paginaNova = arquivos.map((arquivo) => ({ url: arquivo.replace('.mustache', '')}))
+    console.log(paginaNova)
+    return {
 
-    paginaNova: []
+        paginaNova
+    
+    };
+}
 
-};
+const todasPaginas = inicializarTodasPaginas();
 
 // Páginas
 
@@ -91,14 +98,26 @@ router.post("/logout", (req, res) => {
 //A rota que recebe os dados da nova página e os armazena em um objeto que guarda todas as páginas, verificando se os campos foram preenchidos e se a URL é repetida
 router.post("/criar", (req, res) => {
 
+    const { headerColor, footerColor } = req.body;
+
     const pag = 
     "<!doctype html>" +
     "<html lang='pt-br'>" +
     "<head>" +
     "<meta charset='utf-8'>" +
     "<title>" + req.body.header + "</title>" +
-    "<link rel='stylesheet' href='./global.css'></link>" +
+    "<link rel='stylesheet' href='../global.css'></link>" +
     "</head>" +
+    `<style>
+        header {
+            background: ${headerColor};
+        }
+
+        footer {
+            background: ${footerColor};
+        }
+    </style>
+    ` + 
     "<body>" + 
     "<header>" + 
     "<h1>" + 
@@ -129,15 +148,12 @@ router.post("/criar", (req, res) => {
     }
 
     todasPaginas.paginaNova.push({
-        "url": req.body.url, 
-        "header": req.body.header, 
-        "main": req.body.main, 
-        "footer": req.body.footer
+        "url": req.body.url,
     });
 
     // Caminho absoluto para o arquivo
 
-    const filePath = path.join(__dirname, '../views', `${req.body.url}.mustache`);
+    const filePath = path.join(__dirname, '../views/posts', `${req.body.url}.mustache`);
 
     // Criando arquivo com o conteúdo da página
 
@@ -174,7 +190,7 @@ router.post("/deletar", (req, res) => {
 
     // Caminho absoluto para o arquivo
 
-    const filePath = path.join(__dirname, '../views', `${req.body.url}.mustache`);
+    const filePath = path.join(__dirname, '../views/posts', `${req.body.url}.mustache`);
 
     console.log(todasPaginas)
 
@@ -209,7 +225,7 @@ router.post("/editar", (req, res) => {
     "<head>" +
     "<meta charset='utf-8'>" +
     "<title>" + req.body.header + "</title>" +
-    "<link rel='stylesheet' href='./global.css'></link>" +
+    "<link rel='stylesheet' href='../global.css'></link>" +
     "</head>" +
     "<body>" + 
     "<header>" + 
@@ -242,7 +258,7 @@ router.post("/editar", (req, res) => {
 
     // Caminho absoluto para o arquivo
 
-    const filePath = path.join(__dirname, '../views', `${req.body.url}.mustache`);
+    const filePath = path.join(__dirname, '../views/posts', `${req.body.url}.mustache`);
 
     // Percorre o array para identifiar a página a ser alterada e modifica com base nos dados fornecidos
 
@@ -252,9 +268,6 @@ router.post("/editar", (req, res) => {
 
             todasPaginas.paginaNova[i] = { 
                 "url": req.body.url,
-                "header": req.body.header, 
-                "main": req.body.main, 
-                "footer": req.body.footer
             };
 
             fs.writeFile(filePath, newInfo, (err) => {
@@ -277,18 +290,21 @@ router.post("/editar", (req, res) => {
 })
 
 // A rota que recebe a URL da página como parâmetro e renderiza o template usando o conteúdo como argumento
-router.get("/:url", (req, res) => {
+router.get("/posts/:url", (req, res) => {
 
-    const filePath = path.join(__dirname, '../views', `${req.params.url}.mustache`);
+    const filePath = path.join(__dirname, '../views/posts', `${req.params.url}.mustache`);
+
+    console.log(filePath)
 
     fs.readFile(filePath, 'utf8', (err, data) => {
+        console.log(err, data)
 
         if (err) {
             console.error("Erro ao ler o arquivo:", err);
             return res.status(404).render("404", { aviso: "Página não encontrada", usuario: usuario });
         }
 
-        res.render(req.params.url, { conteudo: data, usuario: usuario });
+        res.render(`posts/${req.params.url}`, { conteudo: data, usuario: usuario });
 
     });
 
