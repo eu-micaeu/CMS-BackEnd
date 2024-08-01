@@ -133,6 +133,12 @@ router.post("/criar", (req, res) => {
     "</body>" +
     "</html>";
 
+    const content = 
+    `    URL: ${req.body.url} 
+    Cabeçalho: ${req.body.header} 
+    Texto principal: ${req.body.main} 
+    Rodapé: ${req.body.footer}`
+
     console.log(req.body)
 
     if(req.body.url == "" || req.body.header == ""){
@@ -155,6 +161,8 @@ router.post("/criar", (req, res) => {
 
     const filePath = path.join(__dirname, '../views/posts', `${req.body.url}.mustache`);
 
+    const contentPath = path.join(__dirname, '../views/content', `${req.body.url}.txt`);
+
     // Criando arquivo com o conteúdo da página
 
     fs.writeFile(filePath, pag, (err) => {
@@ -165,6 +173,9 @@ router.post("/criar", (req, res) => {
             return res.render("home", { aviso: "Erro ao criar página", usuario: usuario, todasPaginas: todasPaginas });
         } else {
             console.log("Página criada com sucesso");
+            fs.writeFile(contentPath, content, (err) => {
+                if (err) console.log("Erro ao criar o .txt:"+err)
+            })
         }
     });
 
@@ -192,6 +203,8 @@ router.post("/deletar", (req, res) => {
 
     const filePath = path.join(__dirname, '../views/posts', `${req.body.url}.mustache`);
 
+    const contentPath = path.join(__dirname, '../views/content', `${req.body.url}.txt`);
+
     console.log(todasPaginas)
 
     todasPaginas.paginaNova = todasPaginas.paginaNova.filter(pagina => pagina.url !== req.body.url);
@@ -207,6 +220,9 @@ router.post("/deletar", (req, res) => {
             console.error("Erro ao deletar o arquivo:", err);
             return res.render("home", { aviso: "Erro ao deletar página", usuario: usuario, todasPaginas: todasPaginas });
         } else {
+            fs.unlink(contentPath, (err) => {
+                console.log("Erro ao deletar o .txt: "+err)
+            })
             console.log("Página deletada com sucesso");
         }
     });
@@ -242,6 +258,12 @@ router.post("/editar", (req, res) => {
     "</body>" +
     "</html>";
 
+    const newContent = 
+    `    URL: ${req.body.url} 
+    Cabeçalho: ${req.body.header} 
+    Texto principal: ${req.body.main} 
+    Rodapé: ${req.body.footer}`
+
     console.log(req.body)
 
     if(req.body.url == "" || req.body.header == "" || req.body.main == "" || req.body.footer == ""){
@@ -260,6 +282,8 @@ router.post("/editar", (req, res) => {
 
     const filePath = path.join(__dirname, '../views/posts', `${req.body.url}.mustache`);
 
+    const contentPath = path.join(__dirname, '../views/content', `${req.body.url}.txt`);
+
     // Percorre o array para identifiar a página a ser alterada e modifica com base nos dados fornecidos
 
     for(let i = 0; i < todasPaginas.paginaNova.length; i++){
@@ -277,6 +301,9 @@ router.post("/editar", (req, res) => {
                     return res.render("editar", { aviso: "Erro ao editar página", usuario: usuario, todasPaginas: todasPaginas });
                 } else {
                     console.log("Página editada com sucesso");
+                    fs.writeFile(contentPath, newContent, (err) => {
+                        console.log("Erro ao editar o .txt: "+err)
+                    })
                 }
 
             })
