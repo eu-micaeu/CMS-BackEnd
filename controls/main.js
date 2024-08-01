@@ -141,10 +141,15 @@ router.post("/criar", (req, res) => {
 
     console.log(req.body)
 
-    if(req.body.url == "" || req.body.header == ""){
+    if(req.body.url == "" || req.body.header == "" || req.body.main == "" || req.body.footer == ""){
 
         return res.render("home", {aviso: "Preencha todos os dados", usuario: usuario, todasPaginas: todasPaginas})
 
+    }
+
+    else if(/[^a-z0-9]/i.test(req.body.url)){
+
+        return res.render("home", {aviso: "URL possui caracteres inválidos ou espaços em branco", usuario: usuario, todasPaginas: todasPaginas})
     }
 
     else if(todasPaginas.paginaNova.some(pagina => pagina.url == req.body.url)){
