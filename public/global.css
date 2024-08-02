@@ -69,10 +69,6 @@ main {
     display: flex;
 }
 
-main section {
-    width: 100%;
-}
-
 main aside {
     width: 400px;
     padding: 40px;
@@ -84,7 +80,10 @@ main section {
     display: flex;
     flex-direction: column;
     max-width: 1000px;
+    width: 100%;
     margin: 0 auto;
+    padding: 0 30px;
+
 }
 
 main section form {
@@ -112,6 +111,14 @@ main section form button {
 
 h1 {
     font-size: 40px;
+}
+
+.post {
+    font-size: 32px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: block;
+    color: #1733C6;
 }
 
 

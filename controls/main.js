@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const fs = require('fs');
-const path = require('path'); 
+const path = require('path');
 
 let usuario
 
@@ -58,6 +58,13 @@ router.get("/editar", (req, res) => {
     }
 
     res.render("editar", {usuario: usuario, todasPaginas: todasPaginas})
+
+})
+
+router.get("/todos-posts", (req, res) => {
+
+
+    res.render("posts", { todasPaginas: todasPaginas})
 
 })
 
@@ -258,6 +265,8 @@ router.post("/editar", (req, res) => {
 
     }
 
+    const { headerColor, footerColor } = req.body;
+
     const newInfo = 
     "<!doctype html>" +
     "<html lang='pt-br'>" +
@@ -266,6 +275,16 @@ router.post("/editar", (req, res) => {
     "<title>" + req.body.header + "</title>" +
     "<link rel='stylesheet' href='../global.css'></link>" +
     "</head>" +
+    `<style>
+        header {
+            background: ${headerColor};
+        }
+
+        footer {
+            background: ${footerColor};
+        }
+    </style>
+    ` + 
     "<body>" + 
     "<header>" + 
     "<h1>" + 

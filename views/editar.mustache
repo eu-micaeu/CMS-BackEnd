@@ -23,10 +23,10 @@
       <div class="navegacao">
         <img src="./logo.svg" height="40">
         <nav>
-          <a href="/home">Criar post</a>
-          <a href="/excluir">Excluir post</a>
-          <a href="/editar">Editar post</a>
-          <a href="/todos-posts">Ver posts</a>
+          <a href="/home">Criar página</a>
+          <a href="/excluir">Excluir página</a>
+          <a href="/editar">Editar página</a>
+          <a href="/todos-posts">Ver páginas</a>
         </nav>
       </div>
 
@@ -61,11 +61,16 @@
     
           <br><br>
     
-          <label for="header">Novo header da página:</label>
+          <label for="header">Novo título da página:</label>
           
           <input type="text" name="header" id="header">
     
-          <br><br>
+          <br>
+
+          <label for="headerColor">Cor do header</label>
+          <input type="color" id="headerColor" name="headerColor" value="#FFA500" />
+    
+          <br>
     
           <label for="main">Nova main da página:</label>
           
@@ -77,7 +82,12 @@
           
           <input type="text" name="footer" id="footer">
     
-          <br><br>
+          <br>
+          
+          <label for="headerColor">Cor do footer</label>
+          <input type="color" id="footerColor" name="footerColor" value="#a06800" />
+          
+          <br>
     
           <button type="submit" id="btnEditar" style="background-color: grey">Salvar</button>
     
@@ -93,10 +103,10 @@
     
         </section>
         <aside>
-          <h2>Posts</h2>
+          <h2>Páginas</h2>
           {{#todasPaginas.paginaNova}}
 
-          <div class=conteudo>
+          <div>
             <a href="http://localhost:3000/posts/{{url}}" target="_blank">{{url}}</a>
           </div>
   
