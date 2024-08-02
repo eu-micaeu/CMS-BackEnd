@@ -23,10 +23,10 @@
       <div class="navegacao">
         <img src="./logo.svg" height="40">
         <nav>
-          <a href="/home">Criar post</a>
-          <a href="/excluir">Excluir post</a>
-          <a href="/editar">Editar post</a>
-          <a href="/todos-posts">Ver posts</a>
+          <a href="/home">Criar páginas</a>
+          <a href="/excluir">Excluir páginas</a>
+          <a href="/editar">Editar páginas</a>
+          <a href="/todos-posts">Ver páginas</a>
         </nav>
       </div>
 
@@ -60,7 +60,7 @@
     
           <br>
     
-          <label for="header">Header da página:</label>
+          <label for="header">Título da página:</label>
           
           <input type="text" name="header" id="header">
     
@@ -88,6 +88,11 @@
           <input type="color" id="footerColor" name="footerColor" value="#a06800" />
     
           <br>
+
+         <label for="thumbnail">Thumbnail:</label>
+        <input type="file" name="thumbnail" id="thumbnail">
+
+        <br>
     
           <button type="submit" id="btnEntrar">Enviar</button>
     
@@ -101,10 +106,10 @@
     
         </section>
         <aside>
-          <h2>Posts</h2>
+          <h2>Páginas</h2>
           {{#todasPaginas.paginaNova}}
 
-          <div class=conteudo>
+          <div>
             <a href="http://localhost:3000/posts/{{url}}" target="_blank">{{url}}</a>
           </div>
   
