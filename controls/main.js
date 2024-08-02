@@ -8,7 +8,6 @@ let usuario
 const inicializarTodasPaginas = () => {
     const arquivos = fs.readdirSync(path.join(__dirname, '../views/posts'));
     const paginaNova = arquivos.map((arquivo) => ({ url: arquivo.replace('.mustache', '')}))
-    console.log(paginaNova)
     return {
 
         paginaNova
@@ -152,8 +151,6 @@ router.post("/criar", (req, res) => {
     Texto principal: ${req.body.main} 
     Rodapé: ${req.body.footer}`
 
-    console.log(req.body)
-
     if(req.body.url == "" || req.body.header == "" || req.body.main == "" || req.body.footer == ""){
 
         return res.render("home", {aviso: "Preencha todos os dados", usuario: usuario, todasPaginas: todasPaginas})
@@ -229,11 +226,7 @@ router.post("/deletar", (req, res) => {
 
     const contentPath = path.join(__dirname, '../views/content', `${req.body.url}.txt`);
 
-    console.log(todasPaginas)
-
     todasPaginas.paginaNova = todasPaginas.paginaNova.filter(pagina => pagina.url !== req.body.url);
-
-    console.log(todasPaginas)
 
     // Excluindo arquivo da página escolhida
 
@@ -306,8 +299,6 @@ router.post("/editar", (req, res) => {
     Texto principal: ${req.body.main} 
     Rodapé: ${req.body.footer}`
 
-    console.log(req.body)
-
     if(req.body.url == "" || req.body.header == "" || req.body.main == "" || req.body.footer == ""){
 
         return res.render("editar", {aviso: "Preencha todos os dados", usuario: usuario, todasPaginas: todasPaginas})
@@ -363,10 +354,7 @@ router.get("/posts/:url", (req, res) => {
 
     const filePath = path.join(__dirname, '../views/posts', `${req.params.url}.mustache`);
 
-    console.log(filePath)
-
     fs.readFile(filePath, 'utf8', (err, data) => {
-        console.log(err, data)
 
         if (err) {
             console.error("Erro ao ler o arquivo:", err);
