@@ -98,6 +98,12 @@ router.post("/logout", (req, res) => {
 //A rota que recebe os dados da nova página e os armazena em um objeto que guarda todas as páginas, verificando se os campos foram preenchidos e se a URL é repetida
 router.post("/criar", (req, res) => {
 
+    if(!req.session.usuario){
+
+        return res.redirect("/")
+
+    }
+
     const { headerColor, footerColor } = req.body;
 
     const pag = 
@@ -192,6 +198,12 @@ router.post("/criar", (req, res) => {
 
 router.post("/deletar", (req, res) => {
 
+    if(!req.session.usuario){
+
+        return res.redirect("/")
+
+    }
+
     if(req.body.url == ""){
 
         return res.render("excluir", {aviso: "Preencha a url", usuario: usuario, todasPaginas: todasPaginas})
@@ -239,6 +251,12 @@ router.post("/deletar", (req, res) => {
 //A rota que recebe os dados da página a ser editada e os altera tanto no array quanto no arquivo, verificando se os campos foram preenchidos e se a URL existe
 
 router.post("/editar", (req, res) => {
+
+    if(!req.session.usuario){
+
+        return res.redirect("/")
+
+    }
 
     const newInfo = 
     "<!doctype html>" +
