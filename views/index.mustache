@@ -8,7 +8,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./global.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
     <title>Tmk</title>
 
@@ -16,59 +19,61 @@
 
   <body>
 
-    <header>
-
-      <img src="./logo.jpg" width="50" height="50">
-
+   <header>
+      <div class="navegacao">
+        <img src="./logo.svg" height="40">
+      </div>
     </header>
 
-    <h1>Bem-Vindo!</h1>
+    <main>
+      <section>
 
-    <form method="POST" action="/login">
+   
+        <h1>Bem vindo</h1>
+    
+        <form method="POST" action="/login">
 
-      <label for="usuario">Usuário:</label>
-
-      <input type="text" name="usuario" id="usuario">
-
-      <br><br>
-
-      <label for="senha">Senha:</label>
-
-      <input type="password" name="senha" id="senha">
-
-      <br><br>
-
-      <button type="submit" id="btnEntrar">Entrar</button>
-
-    </form>
-
-     <div class=paginas>
-
-      {{#todasPaginas.paginaNova}}
-
-        <h2>Páginas existentes</h2>
-
-        <div class=conteudo>
-
-          <a href="http://localhost:3000/posts/{{url}}" target="_blank">{{url}}</a>
+          <label for="usuario">Usuário:</label>
+    
+          <input type="text" name="usuario" id="usuario">
+    
+          <br><br>
+    
+          <label for="senha">Senha:</label>
+    
+          <input type="password" name="senha" id="senha">
+    
+          <br><br>
+    
+          <button type="submit" id="btnEntrar">Entrar</button>
+    
+        </form>
+    
+    
+        {{#aviso}}
+    
+          <h3 id="aviso">{{aviso}}</h3>
           
-        </div>
+        {{/aviso}}
+    
+        </section>
+        <aside>
+          <h2>Posts</h2>
+          {{#todasPaginas.paginaNova}}
 
-      {{/todasPaginas.paginaNova}}
-
-      {{^todasPaginas.paginaNova}}
-      
-        <h2>Não existe páginas</h2>
-      
-      {{/todasPaginas.paginaNova}}
-
-    </div>
-
-    {{#aviso}}
-
-      <h3 id="aviso">{{aviso}}</h3>
-      
-    {{/aviso}}
+          <div class=conteudo>
+            <a href="http://localhost:3000/posts/{{url}}" target="_blank">{{url}}</a>
+          </div>
+  
+        {{/todasPaginas.paginaNova}}
+  
+        {{^todasPaginas.paginaNova}}
+        
+          <h2>Não existe páginas</h2>
+        
+        {{/todasPaginas.paginaNova}}
+        </aside>
+    </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   

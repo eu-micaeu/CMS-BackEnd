@@ -8,9 +8,10 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="./home.css">
-    
-    <link rel="stylesheet" href="./excluir.css">
+    <link rel="stylesheet" href="./global.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 
     <title>Tmk</title>
 
@@ -19,80 +20,77 @@
   <body>
 
    <header>
+      <div class="navegacao">
+        <img src="./logo.svg" height="40">
+        <nav>
+          <a href="/home">Criar post</a>
+          <a href="/excluir">Excluir post</a>
+          <a href="/editar">Editar post</a>
+          <a href="/todos-posts">Ver posts</a>
+        </nav>
+      </div>
 
-      <img src="./logo.jpg" width="50" height="50">
+      <form method="POST" action="/logout" class= userInfo>
+        <div>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12ZM12 14C8.68629 14 4 15.3431 4 18V20H20V18C20 15.3431 15.3137 14 12 14Z" fill="currentColor"/>
+          </svg>{{usuario}}          
+        </div>
+        
+        <div>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M5 4C4.44772 4 4 4.44772 4 5V19C4 19.5523 4.44772 20 5 20H15C15.5523 20 16 19.5523 16 19C16 18.4477 15.5523 18 15 18H6V6H15C15.5523 6 16 5.55228 16 5C16 4.44772 15.5523 4 15 4H5ZM18.2929 7.70711C17.9024 7.31658 17.9024 6.68342 18.2929 6.29289C18.6834 5.90237 19.3166 5.90237 19.7071 6.29289L22.7071 9.29289C23.0976 9.68342 23.0976 10.3166 22.7071 10.7071L19.7071 13.7071C19.3166 14.0976 18.6834 14.0976 18.2929 13.7071C17.9024 13.3166 17.9024 12.6834 18.2929 12.2929L19.5858 11H11C10.4477 11 10 10.5523 10 10C10 9.44772 10.4477 9 11 9H19.5858L18.2929 7.70711Z" fill="currentColor"/>
+          </svg>          
+          <button type="submit" id="btnSair">Logout</button>
+        </div>
+      </form>
 
     </header>
 
-    <form method="POST" action="/logout" class= userInfo>
+    <main>
+      <section>
 
-      <label for="usuario">Logado como: {{usuario}} </label> 
-
-      <button type="submit" id="btnSair" style="background-color: red">Sair</button>
-
-    </form>
-
-    <div>
-    
-      <button onClick="goToEditar()" id="btnNavEditar" style="background-color: grey" class="button">Ir para edição</button>
-
-      <button onClick="goToCriar()" id="btnNavCriar" style="background-color: green" class="button">Ir para criação</button>
-    
-    </div>
    
+        <h1>Exclusão de Páginas</h1>
 
-    <h1>Exclusão de Páginas</h1>
+        <form method="POST" action="/deletar" class= deletarPagina>
 
-    <form method="POST" action="/deletar" class= deletarPagina>
+          <label for="url">URL da página:</label>
 
-      <label for="url">URL da página:</label>
+          <input type="text" name="url" id="url">
 
-      <input type="text" name="url" id="url">
+          <br><br>
 
-      <br><br>
+          <button type="submit" id="btnExcluir" style="background-color: red">Excluir</button>
 
-      <button type="submit" id="btnExcluir" style="background-color: red">Excluir</button>
-
-    </form>
-
-    {{#aviso}}
-
-      <h3 id="aviso">{{aviso}}</h3>
-      
-    {{/aviso}}
-
-    <div class=paginas>
-
-      {{#todasPaginas.paginaNova}}
-
-        <h2>Páginas existentes</h2>
-
-        <div class=conteudo>
-
-          <a href="http://localhost:3000/posts/{{url}}" target="_blank">{{url}}</a>
+        </form>
+    
+    
+        {{#aviso}}
+    
+          <h3 id="aviso">{{aviso}}</h3>
           
-        </div>
+        {{/aviso}}
+    
+        </section>
+        <aside>
+          <h2>Posts</h2>
+          {{#todasPaginas.paginaNova}}
 
-      {{/todasPaginas.paginaNova}}
-
-      {{^todasPaginas.paginaNova}}
-      
-        <h2>Não existe páginas</h2>
-      
-      {{/todasPaginas.paginaNova}}
-
-    </div>
-
-    <script>
-      function goToCriar() {
-        window.location.href = "/home"
-      }
-
-      function goToEditar() {
-        window.location.href = "/editar"
-      }
-    </script>
-
+          <div class=conteudo>
+            <a href="http://localhost:3000/posts/{{url}}" target="_blank">{{url}}</a>
+          </div>
+  
+        {{/todasPaginas.paginaNova}}
+  
+        {{^todasPaginas.paginaNova}}
+        
+          <h2>Não existe páginas</h2>
+        
+        {{/todasPaginas.paginaNova}}
+        </aside>
+    </main>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   
   </body>
