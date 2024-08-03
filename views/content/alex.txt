@@ -1,0 +1,12 @@
+    URL: alex 
+    Cabeçalho: Alex Silva 
+    Texto principal: <section style="margin-bottom: 40px;">
+      <h2 style="font-size: 2.2em; color: #3498db; border-bottom: 2px solid #2980b9; padding-bottom: 8px;">Início da Vida</h2>
+      <p style="font-size: 1.2em; margin-top: 15px;">Alex Silva nasceu em Nova Tech City, no ano de 1990. Desde jovem, mostrou um talento excepcional para a tecnologia e inovação, criando seus primeiros softwares aos 12 anos. Alex cresceu em uma família de engenheiros, o que influenciou fortemente sua paixão pelo mundo digital.</p>
+    </section>
+
+    <section style="margin-bottom: 40px;">
+      <h2 style="font-size: 2.2em; color: #3498db; border-bottom: 2px solid #2980b9; padding-bottom: 8px;">Carreira</h2>
+      <p style="font-size: 1.2em; margin-top: 15px;">Após se formar em Ciência da Computação pela Universidade de Futurista, Alex fundou sua própria startup, a "InovaTech", focada em inteligência artificial e realidade aumentada. Seu trabalho revolucionou a forma como interagimos com a tecnologia, especialmente com a criação do assistente virtual "Aurora", que se tornou uma febre mundial.</p>
+    </section> 
+    Rodapé: Alex Silva @ 2024/1
