@@ -121,10 +121,21 @@ h1 {
     color: #1733C6;
 }
 
+.headerPagina {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.pagina {
+    padding: 16px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-size: 20px;
+}
 
 footer{
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -136,6 +147,5 @@ footer{
     margin-top: 50px;
     position: absolute;
     bottom: 0;
-    font-family: monospace;
-
+    font-size: 28px;
 }

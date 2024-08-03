@@ -131,12 +131,12 @@ router.post("/criar", (req, res) => {
     </style>
     ` + 
     "<body>" + 
-    "<header>" + 
+    "<header class='headerPagina'>" + 
     "<h1>" + 
     req.body.header + 
     "</h1>" + 
     "</header>"+
-    "<main>" +
+    "<main class='pagina'>" +
     req.body.main +
     "</main>" +
     "<footer>" +
@@ -279,12 +279,12 @@ router.post("/editar", (req, res) => {
     </style>
     ` + 
     "<body>" + 
-    "<header>" + 
+    "<header class='headerPagina'>" + 
     "<h1>" + 
     req.body.header + 
     "</h1>" + 
     "</header>"+
-    "<main>" +
+    "<main class='pagina'>" +
     req.body.main +
     "</main>" +
     "<footer>" +
