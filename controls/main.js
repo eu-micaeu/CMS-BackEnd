@@ -238,7 +238,7 @@ router.post("/deletar", (req, res) => {
             return res.render("home", { aviso: "Erro ao deletar página", usuario: usuario, todasPaginas: todasPaginas });
         } else {
             fs.unlink(contentPath, (err) => {
-                console.log("Erro ao deletar o .txt: "+err)
+                if (err) console.log("Erro ao deletar o .txt: "+err)
             })
             console.log("Página deletada com sucesso");
         }
@@ -335,7 +335,7 @@ router.post("/editar", (req, res) => {
                 } else {
                     console.log("Página editada com sucesso");
                     fs.writeFile(contentPath, newContent, (err) => {
-                        console.log("Erro ao editar o .txt: "+err)
+                        if (err) console.log("Erro ao editar o .txt: "+err)
                     })
                 }
 

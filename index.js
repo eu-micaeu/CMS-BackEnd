@@ -9,12 +9,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')))
 
+//Nocache
+const nocache = require('nocache');
+app.use(nocache())
+
 //Template
 var mustacheExpress = require("mustache-express");
 var engine = mustacheExpress()
 app.engine("mustache", engine);
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "mustache");
+app.set('view cache', false);
 
 //Cookies
 const cookieParser = require("cookie-parser")

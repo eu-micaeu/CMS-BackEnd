@@ -1,4 +1,0 @@
-    URL: teste 
-    Cabeçalho: AGUAAAA 
-    Texto principal: ds 
-    Rodapé: s
