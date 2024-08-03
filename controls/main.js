@@ -1,14 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const fs = require('fs');
-const path = require('path'); 
+const path = require('path');
 
 let usuario
 
 const inicializarTodasPaginas = () => {
     const arquivos = fs.readdirSync(path.join(__dirname, '../views/posts'));
     const paginaNova = arquivos.map((arquivo) => ({ url: arquivo.replace('.mustache', '')}))
-    console.log(paginaNova)
     return {
 
         paginaNova
@@ -58,6 +57,13 @@ router.get("/editar", (req, res) => {
     }
 
     res.render("editar", {usuario: usuario, todasPaginas: todasPaginas})
+
+})
+
+router.get("/todos-posts", (req, res) => {
+
+
+    res.render("posts", { todasPaginas: todasPaginas})
 
 })
 
@@ -125,12 +131,12 @@ router.post("/criar", (req, res) => {
     </style>
     ` + 
     "<body>" + 
-    "<header>" + 
+    "<header class='headerPagina'>" + 
     "<h1>" + 
     req.body.header + 
     "</h1>" + 
     "</header>"+
-    "<main>" +
+    "<main class='pagina'>" +
     req.body.main +
     "</main>" +
     "<footer>" +
@@ -144,8 +150,6 @@ router.post("/criar", (req, res) => {
     Cabeçalho: ${req.body.header} 
     Texto principal: ${req.body.main} 
     Rodapé: ${req.body.footer}`
-
-    console.log(req.body)
 
     if(req.body.url == "" || req.body.header == "" || req.body.main == "" || req.body.footer == ""){
 
@@ -222,11 +226,7 @@ router.post("/deletar", (req, res) => {
 
     const contentPath = path.join(__dirname, '../views/content', `${req.body.url}.txt`);
 
-    console.log(todasPaginas)
-
     todasPaginas.paginaNova = todasPaginas.paginaNova.filter(pagina => pagina.url !== req.body.url);
-
-    console.log(todasPaginas)
 
     // Excluindo arquivo da página escolhida
 
@@ -258,6 +258,8 @@ router.post("/editar", (req, res) => {
 
     }
 
+    const { headerColor, footerColor } = req.body;
+
     const newInfo = 
     "<!doctype html>" +
     "<html lang='pt-br'>" +
@@ -266,13 +268,23 @@ router.post("/editar", (req, res) => {
     "<title>" + req.body.header + "</title>" +
     "<link rel='stylesheet' href='../global.css'></link>" +
     "</head>" +
+    `<style>
+        header {
+            background: ${headerColor};
+        }
+
+        footer {
+            background: ${footerColor};
+        }
+    </style>
+    ` + 
     "<body>" + 
-    "<header>" + 
+    "<header class='headerPagina'>" + 
     "<h1>" + 
     req.body.header + 
     "</h1>" + 
     "</header>"+
-    "<main>" +
+    "<main class='pagina'>" +
     req.body.main +
     "</main>" +
     "<footer>" +
@@ -286,8 +298,6 @@ router.post("/editar", (req, res) => {
     Cabeçalho: ${req.body.header} 
     Texto principal: ${req.body.main} 
     Rodapé: ${req.body.footer}`
-
-    console.log(req.body)
 
     if(req.body.url == "" || req.body.header == "" || req.body.main == "" || req.body.footer == ""){
 
@@ -344,10 +354,7 @@ router.get("/posts/:url", (req, res) => {
 
     const filePath = path.join(__dirname, '../views/posts', `${req.params.url}.mustache`);
 
-    console.log(filePath)
-
     fs.readFile(filePath, 'utf8', (err, data) => {
-        console.log(err, data)
 
         if (err) {
             console.error("Erro ao ler o arquivo:", err);

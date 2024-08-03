@@ -1,29 +1,141 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
 body{
-
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
 }
 
 header{
-
     display: flex;
-    justify-content: center;
     align-items: center;
-    background-color: #FFA500;
+    justify-content: space-between;
+    padding: 0 80px 0 80px;
+    background-color: white;
+    border-bottom: 1px solid gray;
     color: rgb(0, 0, 0);
     width: 100%;
-    height: 100px;
-    text-align: center;
-    margin-bottom: 50px;
-    font-family: monospace;
+    height: 80px;
+}
+
+header .navegacao {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+header .navegacao nav {
+    display: flex;
+    gap: 40px;
+}
+
+header .navegacao a {
+    color: #1733C6;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+header form {
+    display: flex;
+    gap: 20px;
+}
+
+header form div {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+header form button {
+    border: none;
+    margin: 0;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+input {
+    height: 40px;
+    padding: 4px;
+    border-radius: 8px;
+    border-color: gray;
+    outline: none;
+    width: 100%;
+    max-width: 500px;
+}
+
+main {
+    display: flex;
+}
+
+main aside {
+    width: 400px;
+    padding: 40px;
+    border-left: 1px solid grey;
+    min-height: 100vh;
+}
+
+main section {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 30px;
 
 }
 
-footer{
+main section form {
+    display: flex;
+    flex-direction: column;
+}
 
+main section form label {
+    margin-bottom: 10px;
+}
+
+main section form button {
+    max-width: 200px;
+    background-color: #1733C6;
+    color: white;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+.post {
+    font-size: 32px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: block;
+    color: #1733C6;
+}
+
+.headerPagina {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagina {
+    padding: 16px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+footer{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,6 +147,5 @@ footer{
     margin-top: 50px;
     position: absolute;
     bottom: 0;
-    font-family: monospace;
-
+    font-size: 28px;
 }
